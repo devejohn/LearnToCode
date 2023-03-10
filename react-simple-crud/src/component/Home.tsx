@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
-import AddEmployee from "./AddEmployee";
-import EditEmployee from "./EditEmployee";
-import { IEmployee, PageEnum } from "./Employee.type";
-import EmployeeList from "./EmployeeList";
+import AddAlert from "./AddAlert";
+import EditAlert from "./EditAlert";
+import { IAlert, PageEnum } from "./Alert.type";
+import AlertList from "./AlertList";
 import "./Home.style.css";
 
 const Home = () => {
-  const [employeeList, setEmployeeList] = useState([] as IEmployee[]);
+  const [alertList, setAlertList] = useState([] as IAlert[]);
   const [shownPage, setShownPage] = useState(PageEnum.list);
-  const [dataToEdit, setDataToEdit] = useState({} as IEmployee);
+  const [dataToEdit, setDataToEdit] = useState({} as IAlert);
 
   useEffect(() => {
-    const listInString = window.localStorage.getItem("EmployeeList");
+    const listInString = window.localStorage.getItem("AlertList");
     if (listInString) {
-      _setEmployeeList(JSON.parse(listInString));
+      _setAlertList(JSON.parse(listInString));
     }
   }, []);
 
-  const onAddEmployeeClickHnd = () => {
+  const onAddAlertClickHnd = () => {
     setShownPage(PageEnum.add);
   };
 
@@ -25,38 +25,38 @@ const Home = () => {
     setShownPage(PageEnum.list);
   };
 
-  const _setEmployeeList = (list: IEmployee[]) => {
-    setEmployeeList(list);
-    window.localStorage.setItem("EmployeeList", JSON.stringify(list));
+  const _setAlertList = (list: IAlert[]) => {
+    setAlertList(list);
+    window.localStorage.setItem("AlertList", JSON.stringify(list));
   };
 
-  const addEmployee = (data: IEmployee) => {
-    _setEmployeeList([...employeeList, data]);
+  const addAlert = (data: IAlert) => {
+    _setAlertList([...alertList, data]);
   };
 
-  const deleteEmployee = (data: IEmployee) => {
-    // To Index from array i,e employeeList
+  const deleteAlert = (data: IAlert) => {
+    // To Index from array i,e alertList
     // Splice that
     // Update new record
 
-    const indexToDelete = employeeList.indexOf(data);
-    const tempList = [...employeeList];
+    const indexToDelete = alertList.indexOf(data);
+    const tempList = [...alertList];
 
     tempList.splice(indexToDelete, 1);
-    _setEmployeeList(tempList);
+    _setAlertList(tempList);
   };
 
-  const editEmployeeData = (data: IEmployee) => {
+  const editAlertData = (data: IAlert) => {
     setShownPage(PageEnum.edit);
     setDataToEdit(data);
   };
 
-  const updateData = (data: IEmployee) => {
-    const filteredData = employeeList.filter((x) => x.id === data.id)[0];
-    const indexOfRecord = employeeList.indexOf(filteredData);
-    const tempData = [...employeeList];
+  const updateData = (data: IAlert) => {
+    const filteredData = alertList.filter((x) => x.id === data.id)[0];
+    const indexOfRecord = alertList.indexOf(filteredData);
+    const tempData = [...alertList];
     tempData[indexOfRecord] = data;
-    _setEmployeeList(tempData);
+    _setAlertList(tempData);
   };
 
   return (
@@ -72,27 +72,27 @@ const Home = () => {
           <>
             <input
               type="button"
-              value="Add Employee"
-              onClick={onAddEmployeeClickHnd}
-              className="add-employee-btn"
+              value="Add Alert"
+              onClick={onAddAlertClickHnd}
+              className="add-alert-btn"
             />
-            <EmployeeList
-              list={employeeList}
-              onDeleteClickHnd={deleteEmployee}
-              onEdit={editEmployeeData}
+            <AlertList
+              list={alertList}
+              onDeleteClickHnd={deleteAlert}
+              onEdit={editAlertData}
             />
           </>
         )}
 
         {shownPage === PageEnum.add && (
-          <AddEmployee
+          <AddAlert
             onBackBtnClickHnd={showListPage}
-            onSubmitClickHnd={addEmployee}
+            onSubmitClickHnd={addAlert}
           />
         )}
 
         {shownPage === PageEnum.edit && (
-          <EditEmployee
+          <EditAlert
             data={dataToEdit}
             onBackBtnClickHnd={showListPage}
             onUpdateClickHnd={updateData}

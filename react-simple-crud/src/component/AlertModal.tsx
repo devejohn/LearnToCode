@@ -1,12 +1,12 @@
-import { IEmployee } from "./Employee.type";
-import "./EmployeeModal.style.css";
+import { IAlert } from "./Alert.type";
+import "./AlertModal.style.css";
 
 type Props = {
   onClose: () => void;
-  data: IEmployee;
+  data: IAlert;
 };
 
-const EmployeeModal = (props: Props) => {
+const AlertModal = (props: Props) => {
   const { onClose, data } = props;
   return (
     <div id="myModal" className="modal">
@@ -14,16 +14,16 @@ const EmployeeModal = (props: Props) => {
         <span className="close" onClick={onClose}>
           &times;
         </span>
-        <h3>Employee Data</h3>
+        <h3>Alert Data</h3>
         <div>
           <div>
-            <label>First Name : {data.firstName}</label>
+            <label>Title: {data.title}</label>
           </div>
           <div>
-            <label>Last Name : {data.lastName}</label>
+            <label>Type : {data.type}</label>
           </div>
           <div>
-            <label>Email Add. : {data.email}</label>
+            <label>Message : {data.message}</label>
           </div>
         </div>
       </div>
@@ -31,4 +31,4 @@ const EmployeeModal = (props: Props) => {
   );
 };
 
-export default EmployeeModal;
+export default AlertModal;

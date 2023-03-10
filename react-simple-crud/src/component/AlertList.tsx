@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { IEmployee } from "./Employee.type";
-import "./EmployeeList.style.css";
-import EmployeeModal from "./EmployeeModal";
+import { IAlert } from "./Alert.type";
+import "./AlertList.style.css";
+import AlertModal from "./AlertModal";
 
 type Props = {
-  list: IEmployee[];
-  onDeleteClickHnd: (data: IEmployee) => void;
-  onEdit: (data: IEmployee) => void;
+  list: IAlert[];
+  onDeleteClickHnd: (data: IAlert) => void;
+  onEdit: (data: IAlert) => void;
 };
 
-const EmployeeList = (props: Props) => {
+const AlertList = (props: Props) => {
   const { list, onDeleteClickHnd, onEdit } = props;
   const [showModal, setShowModal] = useState(false);
-  const [dataToShow, setDataToShow] = useState(null as IEmployee | null);
+  const [dataToShow, setDataToShow] = useState(null as IAlert | null);
 
-  const viewEmployee = (data: IEmployee) => {
+  const viewAlert = (data: IAlert) => {
     setDataToShow(data);
     setShowModal(true);
   };
@@ -24,35 +24,37 @@ const EmployeeList = (props: Props) => {
   return (
     <div>
       <article>
-        <h3 className="list-header">Employee List</h3>
+        <h3 className="list-header">Alert List</h3>
       </article>
       <table>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
+          <th>title</th>
+          <th>type</th>
+          <th>message</th>
           <th>Action</th>
         </tr>
-        {list.map((employee) => {
+        {list.map((alert) => {
           return (
-            <tr key={employee.id}>
-              <td>{`${employee.firstName} ${employee.lastName}`}</td>
-              <td>{employee.email}</td>
+            <tr key={alert.id}>
+              <td>{`${alert.title}`}</td>
+              <td>{alert.type}</td>
+              <td>{alert.message}</td>
               <td>
                 <div>
                   <input
                     type="button"
                     value="View"
-                    onClick={() => viewEmployee(employee)}
+                    onClick={() => viewAlert(alert)}
                   />
                   <input
                     type="button"
                     value="Edit"
-                    onClick={() => onEdit(employee)}
+                    onClick={() => onEdit(alert)}
                   />
                   <input
                     type="button"
                     value="Delete"
-                    onClick={() => onDeleteClickHnd(employee)}
+                    onClick={() => onDeleteClickHnd(alert)}
                   />
                 </div>
               </td>
@@ -61,10 +63,10 @@ const EmployeeList = (props: Props) => {
         })}
       </table>
       {showModal && dataToShow !== null && (
-        <EmployeeModal onClose={onCloseModal} data={dataToShow} />
+        <AlertModal onClose={onCloseModal} data={dataToShow} />
       )}
     </div>
   );
 };
 
-export default EmployeeList;
+export default AlertList;
